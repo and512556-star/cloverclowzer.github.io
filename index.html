@@ -1,0 +1,149 @@
+<!doctype html>
+<html data-bs-theme="dark" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>clover</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.png" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #0d0d0d;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .centre {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #1a1a1a, #000);
+    }
+
+    .clouds {
+      width: 3000px;
+      height: 800px;
+      background: url('content/clouds.png');
+      background-size: cover;
+      filter: blur(2px);
+    }
+
+    @keyframes cloud_scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-5000px); }
+    }
+
+    .separator img {
+      width: 100%;
+      display: block;
+    }
+
+    pre {
+      font-family: monospace;
+      white-space: pre;
+      text-shadow: 0 0 6px white;
+    }
+
+    .hero-text {
+      position: relative;
+      top: 55vh;
+      width: 100%;
+      text-align: center;
+      transform: translateY(-50%);
+    }
+
+    .hero-text a {
+      color: #ffa;
+      text-decoration: none;
+    }
+
+    .projects {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .project-box {
+      margin: 40px auto;
+      padding: 20px;
+      max-width: 900px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .project-box h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      opacity: 0.9;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #fff2a8;
+    }
+
+    .project-box p {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <div class="centre"><div class="clouds" style="opacity:0.7; animation: cloud_scroll 6000s linear infinite;"></div></div>
+    <div class="centre"><div class="clouds" style="opacity:0.4; animation: cloud_scroll 4000s linear infinite;"></div></div>
+    <div class="centre"><div class="clouds" style="opacity:0.2; animation: cloud_scroll 2000s linear infinite;"></div></div>
+
+    <div class="layer2 centre"><img src="content/haze.png" style="scale:60%;" draggable="false"></div>
+    <div class="layer1 centre"><img src="content/clover_logo.png" style="scale:50%; image-rendering:crisp-edges;" draggable="false"></div>
+
+    <div class="hero-text">
+      <pre>  _____ _                      
+ / ____| |                     
+| |     | | ___  _ __ ___ ___  
+| |     | |/ _ \| '__/ __/ _ \ 
+| |____ | | (_) | | | (_|  __/ 
+ \_____|_|\___/|_|  \___\___|  </pre>
+
+      <p><b style="font-size:3vh; text-shadow:0 0 10px black;">clover</b> — creator, editor, developer</p>
+      <p>business contact: <a href="mailto:contact@clover.is-a.dev">&lt;contact@clover.is-a.dev&gt;</a></p>
+    </div>
+
+    <img src="content/hero.png" class="centre" style="z-index:5;" draggable="false" />
+  </div>
+
+  <div class="separator"><img src="content/separator.jpg" draggable="false"></div>
+
+  <div class="projects">
+    <pre>  _____                     _            
+ |  __ \                   | |           
+ | |__) |___  ___ ___ _ __ | |_ ___ _ __ 
+ |  _  // _ \/ __/ _ \ '_ \| __/ _ \ '__|
+ | | \ \  __/ (_|  __/ | | | ||  __/ |   
+ |_|  \_\___|\___\___|_| |_|\__\___|_|   </pre>
+
+    <div class="project-box">
+      <h2>projects will be added here soon.</h2>
+      <p>a curated list of my games, videos, edits, experiments and major releases will appear here later. stay tuned.</p>
+    </div>
+  </div>
+
+  <div class="separator"><img src="content/separator.jpg" draggable="false"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
