@@ -25,31 +25,25 @@
       background: radial-gradient(circle at center, #1a1a1a, #000);
     }
 
-    /* Clouds layers */
+    /* Clouds layers using background-position for endless scroll */
     .clouds-layer {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 500px;
-      display: flex;
+      background: url('content/clouds.png') repeat-x;
+      background-size: cover;
       pointer-events: none;
     }
 
-    .clouds-copy {
-      width: 3000px;
-      height: 100%;
-      background: url('content/clouds.png') repeat-x;
-      background-size: cover;
-    }
+    .clouds-layer1 { opacity: 0.7; animation: scroll1 60s linear infinite; z-index: 1; }
+    .clouds-layer2 { opacity: 0.4; animation: scroll2 40s linear infinite; z-index: 2; }
+    .clouds-layer3 { opacity: 0.2; animation: scroll3 20s linear infinite; z-index: 3; }
 
-    .clouds-layer1 .clouds-copy { animation: scroll1 60s linear infinite; opacity: 0.7; }
-    .clouds-layer2 .clouds-copy { animation: scroll2 40s linear infinite; opacity: 0.4; }
-    .clouds-layer3 .clouds-copy { animation: scroll3 20s linear infinite; opacity: 0.2; }
-
-    @keyframes scroll1 { 0% { transform: translateX(0); } 100% { transform: translateX(-3000px); } }
-    @keyframes scroll2 { 0% { transform: translateX(0); } 100% { transform: translateX(-3000px); } }
-    @keyframes scroll3 { 0% { transform: translateX(0); } 100% { transform: translateX(-3000px); } }
+    @keyframes scroll1 { 0% { background-position-x: 0; } 100% { background-position-x: 3000px; } }
+    @keyframes scroll2 { 0% { background-position-x: 0; } 100% { background-position-x: 3000px; } }
+    @keyframes scroll3 { 0% { background-position-x: 0; } 100% { background-position-x: 3000px; } }
 
     /* Haze and logo */
     .layer2 .haze {
@@ -171,18 +165,9 @@
   <!-- HERO SECTION -->
   <div class="hero">
     <!-- Endless clouds -->
-    <div class="clouds-layer clouds-layer1">
-      <div class="clouds-copy"></div>
-      <div class="clouds-copy"></div>
-    </div>
-    <div class="clouds-layer clouds-layer2">
-      <div class="clouds-copy"></div>
-      <div class="clouds-copy"></div>
-    </div>
-    <div class="clouds-layer clouds-layer3">
-      <div class="clouds-copy"></div>
-      <div class="clouds-copy"></div>
-    </div>
+    <div class="clouds-layer clouds-layer1"></div>
+    <div class="clouds-layer clouds-layer2"></div>
+    <div class="clouds-layer clouds-layer3"></div>
 
     <!-- Haze and logo -->
     <div class="layer2"><img src="content/haze.png" class="haze" draggable="false"></div>
