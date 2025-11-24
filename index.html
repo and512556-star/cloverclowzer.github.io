@@ -16,6 +16,7 @@
       overflow-x: hidden;
     }
 
+    /* -------- HERO SECTION -------- */
     .hero {
       height: 100vh;
       width: 100%;
@@ -29,20 +30,26 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 3000px;
+      width: 100%;
       height: 500px;
+      display: flex;
+      pointer-events: none;
+    }
+
+    .clouds-copy {
+      width: 3000px;
+      height: 100%;
       background: url('content/clouds.png') repeat-x;
       background-size: cover;
     }
 
-    .clouds-layer1 { opacity: 0.7; animation: cloud_scroll 300s linear infinite; }
-    .clouds-layer2 { opacity: 0.4; animation: cloud_scroll 200s linear infinite; }
-    .clouds-layer3 { opacity: 0.2; animation: cloud_scroll 100s linear infinite; }
+    .clouds-layer1 .clouds-copy { animation: scroll1 60s linear infinite; opacity: 0.7; }
+    .clouds-layer2 .clouds-copy { animation: scroll2 40s linear infinite; opacity: 0.4; }
+    .clouds-layer3 .clouds-copy { animation: scroll3 20s linear infinite; opacity: 0.2; }
 
-    @keyframes cloud_scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-3000px); }
-    }
+    @keyframes scroll1 { 0% { transform: translateX(0); } 100% { transform: translateX(-3000px); } }
+    @keyframes scroll2 { 0% { transform: translateX(0); } 100% { transform: translateX(-3000px); } }
+    @keyframes scroll3 { 0% { transform: translateX(0); } 100% { transform: translateX(-3000px); } }
 
     /* Haze and logo */
     .layer2 .haze {
@@ -89,24 +96,13 @@
       text-decoration: none;
     }
 
-    /* Foreground hero image */
-    .hero-foreground {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 5;
-      pointer-events: none;
-      max-width: 100%;
-    }
-
-    /* Separator */
+    /* -------- SEPARATOR -------- */
     .separator img {
       width: 100%;
       display: block;
     }
 
-    /* Projects section */
+    /* -------- PROJECTS SECTION -------- */
     .projects {
       padding: 40px;
       text-align: center;
@@ -140,7 +136,7 @@
       border-radius: 8px;
     }
 
-    /* Discord card */
+    /* -------- DISCORD CARD -------- */
     .discord-card {
       margin: 60px auto;
       padding: 25px;
@@ -172,15 +168,27 @@
 </head>
 
 <body>
-  <!-- Hero Section -->
+  <!-- HERO SECTION -->
   <div class="hero">
-    <div class="clouds-layer clouds-layer1"></div>
-    <div class="clouds-layer clouds-layer2"></div>
-    <div class="clouds-layer clouds-layer3"></div>
+    <!-- Endless clouds -->
+    <div class="clouds-layer clouds-layer1">
+      <div class="clouds-copy"></div>
+      <div class="clouds-copy"></div>
+    </div>
+    <div class="clouds-layer clouds-layer2">
+      <div class="clouds-copy"></div>
+      <div class="clouds-copy"></div>
+    </div>
+    <div class="clouds-layer clouds-layer3">
+      <div class="clouds-copy"></div>
+      <div class="clouds-copy"></div>
+    </div>
 
+    <!-- Haze and logo -->
     <div class="layer2"><img src="content/haze.png" class="haze" draggable="false"></div>
     <div class="layer1"><img src="content/clover_logo.png" class="logo" draggable="false"></div>
 
+    <!-- Hero text -->
     <div class="hero-text">
       <pre> 
 ______     __         ______     __   __   ______     ______    
@@ -192,13 +200,12 @@ ______     __         ______     __   __   ______     ______
       <p><b>cloverclowzer</b> — creator, editor, developer</p>
       <p>contact me: <a href="mailto:contact@clover.is-a.dev">&lt;contact@clover.is-a.dev&gt;</a></p>
     </div>
-
-    <img src="content/hero.png" class="hero-foreground" draggable="false" />
   </div>
 
+  <!-- SEPARATOR -->
   <div class="separator"><img src="content/separator.jpg" draggable="false"></div>
 
-  <!-- Projects Section -->
+  <!-- PROJECTS SECTION -->
   <div class="projects">
     <pre> 
 ______   ______     ______       __     ______     ______     ______   ______    
@@ -213,7 +220,7 @@ ______   ______     ______       __     ______     ______     ______   ______
     </div>
   </div>
 
-  <!-- Discord Card -->
+  <!-- DISCORD CARD -->
   <div class="discord-card">
     <div id="discord-content">
       <p>loading discord status...</p>
