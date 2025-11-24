@@ -12,7 +12,7 @@
       margin: 0;
       background: #0d0d0d;
       color: white;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: arial, helvetica, sans-serif;
       overflow-x: hidden;
     }
 
@@ -99,6 +99,36 @@
       aspect-ratio: 16/9;
       border-radius: 8px;
     }
+
+    /* -------- discord card -------- */
+
+    .discord-card {
+      margin: 60px auto;
+      padding: 25px;
+      width: 350px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 242, 168, 0.15);
+    }
+
+    .discord-card img {
+      width: 90px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .discord-card h3 {
+      margin: 5px 0;
+      font-size: 1.4rem;
+      text-shadow: 0 0 6px #fff2a8;
+    }
+
+    .discord-card p {
+      opacity: 0.7;
+      margin: 4px 0;
+    }
   </style>
 </head>
 
@@ -144,7 +174,43 @@ ______   ______     ______       __     ______     ______     ______   ______
     </div>
   </div>
 
+  <!-- ------- discord card section ------- -->
+
+  <div class="discord-card">
+    <div id="discord-content">
+      <p>loading discord status...</p>
+    </div>
+  </div>
+
+  <!-- ------- end discord card ------- -->
+
   <div class="separator"><img src="content/separator.jpg" draggable="false"></div>
+
+  <script src="https://lanyard.cnrad.dev/socket/1315300872435273760"></script>
+  <script>
+    window.addEventListener("lanyard", (e) => {
+      const d = e.detail;
+
+      const avatar = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=256`;
+
+      const status_map = {
+        online: "🟢 online",
+        idle: "🟠 idle",
+        dnd: "🔴 do not disturb",
+        offline: "⚫ offline"
+      };
+
+      const activity = d.activities?.find(a => a.type === 4);
+      const custom_status = activity ? activity.state : "";
+
+      document.getElementById("discord-content").innerHTML = `
+        <img src="${avatar}" draggable="false">
+        <h3>${d.discord_user.username}</h3>
+        <p>${status_map[d.discord_status] || "unknown"}</p>
+        <p>${custom_status}</p>
+      `;
+    });
+  </script>
 
   <script src="script.js"></script>
 </body>
