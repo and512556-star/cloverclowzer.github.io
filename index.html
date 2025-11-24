@@ -8,6 +8,7 @@
   <link rel="icon" href="favicon.png" />
 
   <style>
+    /* -------- GENERAL -------- */
     body {
       margin: 0;
       background: #0d0d0d;
@@ -15,6 +16,8 @@
       font-family: arial, helvetica, sans-serif;
       overflow-x: hidden;
     }
+
+    a { color: #ffa; text-decoration: none; }
 
     /* -------- HERO SECTION -------- */
     .hero {
@@ -25,70 +28,65 @@
       background: radial-gradient(circle at center, #1a1a1a, #000);
     }
 
-    /* Clouds layers using background-position for endless scroll */
+    /* Clouds layers */
     .clouds-layer {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 500px;
+      width: 200%;
+      height: 100%;
       background: url('content/clouds.png') repeat-x;
       background-size: cover;
       pointer-events: none;
     }
 
-    .clouds-layer1 { opacity: 0.7; animation: scroll1 60s linear infinite; z-index: 1; }
-    .clouds-layer2 { opacity: 0.4; animation: scroll2 40s linear infinite; z-index: 2; }
-    .clouds-layer3 { opacity: 0.2; animation: scroll3 20s linear infinite; z-index: 3; }
+    .clouds-layer1 { opacity: 0.7; animation: scroll1 120s linear infinite; z-index: 1; }
+    .clouds-layer2 { opacity: 0.4; animation: scroll2 80s linear infinite; z-index: 2; }
+    .clouds-layer3 { opacity: 0.2; animation: scroll3 40s linear infinite; z-index: 3; }
 
-    @keyframes scroll1 { 0% { background-position-x: 0; } 100% { background-position-x: 3000px; } }
-    @keyframes scroll2 { 0% { background-position-x: 0; } 100% { background-position-x: 3000px; } }
-    @keyframes scroll3 { 0% { background-position-x: 0; } 100% { background-position-x: 3000px; } }
+    @keyframes scroll1 { 0% { background-position-x: 0; } 100% { background-position-x: 100%; } }
+    @keyframes scroll2 { 0% { background-position-x: 0; } 100% { background-position-x: 100%; } }
+    @keyframes scroll3 { 0% { background-position-x: 0; } 100% { background-position-x: 100%; } }
 
     /* Haze and logo */
     .layer2 .haze {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.6);
+      transform: translate(-50%, -50%) scale(1);
       pointer-events: none;
+      z-index: 4;
     }
 
     .layer1 .logo {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
+      transform: translate(-50%, -50%) scale(1);
       image-rendering: crisp-edges;
       pointer-events: none;
+      z-index: 5;
     }
 
     /* Hero text */
     .hero-text {
       position: absolute;
-      top: 55%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
       color: white;
-      z-index: 10;
+      z-index: 6;
     }
 
     .hero-text pre {
       white-space: pre-wrap;
       font-family: monospace;
-      text-shadow: 0 0 6px white;
+      text-shadow: 0 0 8px #fff2a8;
       margin: 0 auto 10px;
     }
 
-    .hero-text p {
-      margin: 5px 0;
-    }
-
-    .hero-text a {
-      color: #ffa;
-      text-decoration: none;
-    }
+    .hero-text p { margin: 5px 0; }
 
     /* -------- SEPARATOR -------- */
     .separator img {
@@ -119,16 +117,9 @@
       text-shadow: 0 0 8px #fff2a8;
     }
 
-    .project-box p {
-      font-size: 1rem;
-      opacity: 0.7;
-    }
+    .project-box p { font-size: 1rem; opacity: 0.7; }
 
-    iframe {
-      width: 100%;
-      aspect-ratio: 16/9;
-      border-radius: 8px;
-    }
+    iframe { width: 100%; aspect-ratio: 16/9; border-radius: 8px; }
 
     /* -------- DISCORD CARD -------- */
     .discord-card {
@@ -154,9 +145,11 @@
       text-shadow: 0 0 6px #fff2a8;
     }
 
-    .discord-card p {
-      opacity: 0.7;
-      margin: 4px 0;
+    .discord-card p { opacity: 0.7; margin: 4px 0; }
+
+    @media (max-width: 768px) {
+      .hero-text pre { font-size: 12px; }
+      .project-box h2 { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -164,16 +157,13 @@
 <body>
   <!-- HERO SECTION -->
   <div class="hero">
-    <!-- Endless clouds -->
     <div class="clouds-layer clouds-layer1"></div>
     <div class="clouds-layer clouds-layer2"></div>
     <div class="clouds-layer clouds-layer3"></div>
 
-    <!-- Haze and logo -->
     <div class="layer2"><img src="content/haze.png" class="haze" draggable="false"></div>
     <div class="layer1"><img src="content/clover_logo.png" class="logo" draggable="false"></div>
 
-    <!-- Hero text -->
     <div class="hero-text">
       <pre> 
 ______     __         ______     __   __   ______     ______    
@@ -219,19 +209,15 @@ ______   ______     ______       __     ______     ______     ______   ______
   <script>
     window.addEventListener("lanyard", (e) => {
       const d = e.detail;
-
       const avatar = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=256`;
-
       const status_map = {
         online: "🟢 online",
         idle: "🟠 idle",
         dnd: "🔴 do not disturb",
         offline: "⚫ offline"
       };
-
       const activity = d.activities?.find(a => a.type === 4);
       const custom_status = activity ? activity.state : "No custom status";
-
       document.getElementById("discord-content").innerHTML = `
         <img src="${avatar}" draggable="false">
         <h3>${d.discord_user.username}</h3>
