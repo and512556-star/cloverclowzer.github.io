@@ -1,232 +1,189 @@
-<!doctype html>
-<html data-bs-theme="dark" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>clover</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.png" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>cloverclowzer</title>
 
   <style>
-    /* -------- GENERAL -------- */
-    body {
-      margin: 0;
-      background: #0d0d0d;
-      color: white;
-      font-family: arial, helvetica, sans-serif;
-      overflow-x: hidden;
+    :root{
+      --yellow:#f5e542;
+      --bg:#050505;
+      --card:rgba(25,25,25,0.75);
+      --muted:#bdbdbd;
+      --accent:rgba(245,229,66,0.12);
+      --radius:18px;
+      --glass: rgba(255,255,255,0.03);
+      --transition:300ms cubic-bezier(.2,.9,.2,1);
     }
 
-    a { color: #ffa; text-decoration: none; }
+    *{box-sizing:border-box;margin:0;padding:0;text-transform:lowercase}
+    html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-    /* -------- HERO SECTION -------- */
-    .hero {
-      height: 100vh;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      background: radial-gradient(circle at center, #1a1a1a, #000);
-    }
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,#050505 0%, #070707 100%)}
 
-    /* Clouds layers */
-    .clouds-layer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 100%;
-      background: url('content/clouds.png') repeat-x;
-      background-size: cover;
-      pointer-events: none;
-    }
+    /* floating navbar */
+    .nav{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(8px) saturate(120%);border-radius:999px;padding:8px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 30px rgba(0,0,0,0.6);z-index:1000;transition:var(--transition);border:1px solid rgba(255,255,255,0.03)}
+    .nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:12px}
+    .nav a:hover{color:var(--yellow);background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent)}
 
-    .clouds-layer1 { opacity: 0.7; animation: scroll1 120s linear infinite; z-index: 1; }
-    .clouds-layer2 { opacity: 0.4; animation: scroll2 80s linear infinite; z-index: 2; }
-    .clouds-layer3 { opacity: 0.2; animation: scroll3 40s linear infinite; z-index: 3; }
+    .logo-anim{width:46px;height:46px;display:grid;place-items:center}
 
-    @keyframes scroll1 { 0% { background-position-x: 0; } 100% { background-position-x: 100%; } }
-    @keyframes scroll2 { 0% { background-position-x: 0; } 100% { background-position-x: 100%; } }
-    @keyframes scroll3 { 0% { background-position-x: 0; } 100% { background-position-x: 100%; } }
+    /* blobs */
+    .blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;mix-blend-mode:screen}
+    .blob.a{width:560px;height:560px;left:-160px;top:-120px;background:radial-gradient(circle, rgba(245,229,66,0.22), rgba(245,229,66,0));animation:floatA 12s ease-in-out infinite}
+    .blob.b{width:420px;height:420px;right:-120px;bottom:-120px;background:radial-gradient(circle, rgba(255,140,0,0.14), rgba(255,140,0,0));animation:floatB 14s ease-in-out infinite}
+    @keyframes floatA{0%{transform:translate(0,0)}50%{transform:translate(40px,-60px)}100%{transform:translate(0,0)}}
+    @keyframes floatB{0%{transform:translate(0,0)}50%{transform:translate(-40px,60px)}100%{transform:translate(0,0)}}
 
-    /* Haze and logo */
-    .layer2 .haze {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      pointer-events: none;
-      z-index: 4;
-    }
+    /* hero */
+    .hero{min-height:68vh;display:grid;place-items:center;padding:18vh 20px 6vh;position:relative}
+    .card-hero{width:min(1100px,94%);background:var(--card);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .name{font-size:48px;color:var(--yellow);font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+    .intro{font-size:16px;line-height:1.45;color:var(--muted)}
 
-    .layer1 .logo {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      image-rendering: crisp-edges;
-      pointer-events: none;
-      z-index: 5;
-    }
+    /* typewriter */
+    .typewriter{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:20px;color:#fff;white-space:nowrap;overflow:hidden;border-right:2px solid rgba(255,255,255,0.12);width:100%;max-width:720px}
 
-    /* Hero text */
-    .hero-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      z-index: 6;
-    }
+    /* now playing */
+    .now-playing{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center}
+    .np-art{width:64px;height:64px;border-radius:8px;flex:0 0 64px;background:#111;display:grid;place-items:center;font-size:12px;color:var(--muted)}
+    .np-meta{flex:1}
+    .np-title{font-weight:700}
+    .np-artist{font-size:13px;color:var(--muted)}
 
-    .hero-text pre {
-      white-space: pre-wrap;
-      font-family: monospace;
-      text-shadow: 0 0 8px #fff2a8;
-      margin: 0 auto 10px;
-    }
+    /* projects */
+    .projects-wrap{padding:40px 20px 80px}
+    .section-title{font-size:22px;color:var(--yellow);margin-bottom:18px}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
 
-    .hero-text p { margin: 5px 0; }
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);transition:transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms;transform-style:preserve-3d}
+    .card:hover{transform:translateY(-8px) rotateX(3deg) rotateY(6deg);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+    .card .tilt{transform-origin:center center;transition:transform 120ms linear}
 
-    /* -------- SEPARATOR -------- */
-    .separator img {
-      width: 100%;
-      display: block;
-    }
+    /* dark-gold glitch */
+    .glitch{position:relative;display:inline-block}
+    .glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.8}
+    .glitch::before{clip-path:polygon(0 0,100% 0,100% 60%,0 60%);transform:translate(-2px,-2px);color:var(--yellow);mix-blend-mode:overlay;opacity:0.9}
+    .glitch::after{clip-path:polygon(0 40%,100% 40%,100% 100%,0 100%);transform:translate(2px,2px);filter:blur(1px);opacity:0.6}
+    @keyframes glitch-anim{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2px)}80%{transform:translate(1px,-2px)}100%{transform:translate(0,0)}}
+    .glitch{animation:glitch-anim 3.2s infinite}
 
-    /* -------- PROJECTS SECTION -------- */
-    .projects {
-      padding: 40px;
-      text-align: center;
-    }
+    /* horror mode */
+    .horror-body{background:linear-gradient(180deg,#050000,#000506)}
+    .horror .card{border-color:rgba(255,0,30,0.16);box-shadow:0 20px 80px rgba(255,0,20,0.06)}
+    .horror .blob.a{background:radial-gradient(circle, rgba(255,0,20,0.14), rgba(255,0,20,0))}
+    .horror .name{color:#ff3b3b}
+    .horror .typewriter{border-right-color:rgba(255,0,20,0.85)}
+    .horror .glitch::before{color:#ffef00;mix-blend-mode:screen}
 
-    .project-box {
-      margin: 40px auto;
-      padding: 20px;
-      max-width: 900px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px;
-      backdrop-filter: blur(6px);
-    }
-
-    .project-box h2 {
-      font-size: 2rem;
-      font-weight: bold;
-      opacity: 0.9;
-      margin-bottom: 10px;
-      text-shadow: 0 0 8px #fff2a8;
-    }
-
-    .project-box p { font-size: 1rem; opacity: 0.7; }
-
-    iframe { width: 100%; aspect-ratio: 16/9; border-radius: 8px; }
-
-    /* -------- DISCORD CARD -------- */
-    .discord-card {
-      margin: 60px auto;
-      padding: 25px;
-      width: 350px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 15px;
-      backdrop-filter: blur(6px);
-      text-align: center;
-      box-shadow: 0 0 25px rgba(255, 242, 168, 0.15);
-    }
-
-    .discord-card img {
-      width: 90px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .discord-card h3 {
-      margin: 5px 0;
-      font-size: 1.4rem;
-      text-shadow: 0 0 6px #fff2a8;
-    }
-
-    .discord-card p { opacity: 0.7; margin: 4px 0; }
-
-    @media (max-width: 768px) {
-      .hero-text pre { font-size: 12px; }
-      .project-box h2 { font-size: 1.6rem; }
-    }
+    footer{padding:40px 20px;text-align:center;color:var(--muted);font-size:13px}
+    @media (max-width:900px){.card-hero{grid-template-columns:1fr;gap:18px;padding:28px}.nav{left:12px;transform:none}}
   </style>
 </head>
-
 <body>
-  <!-- HERO SECTION -->
-  <div class="hero">
-    <div class="clouds-layer clouds-layer1"></div>
-    <div class="clouds-layer clouds-layer2"></div>
-    <div class="clouds-layer clouds-layer3"></div>
 
-    <div class="layer2"><img src="content/haze.png" class="haze" draggable="false"></div>
-    <div class="layer1"><img src="content/clover_logo.png" class="logo" draggable="false"></div>
-
-    <div class="hero-text">
-      <pre> 
-______     __         ______     __   __   ______     ______    
-/\  ___\   /\ \       /\  __ \   /\ \ / /  /\  ___\   /\  == \   
-\ \ \____  \ \ \____  \ \ \/\ \  \ \ \'/   \ \  __\   \ \  __<   
- \ \_____\  \ \_____\  \ \_____\  \ \__|    \ \_____\  \ \_\ \_\ 
-  \/_____/   \/_____/   \/_____/   \/_/      \/_____/   \/_/ /_/ 
-                                                                 </pre>
-      <p><b>cloverclowzer</b> — creator, editor, developer</p>
-      <p>contact me: <a href="mailto:contact@clover.is-a.dev">&lt;contact@clover.is-a.dev&gt;</a></p>
+  <!-- floating navbar -->
+  <nav class="nav" aria-label="main nav">
+    <div class="logo-anim" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.9"/><stop offset="1" stop-color="#f5e542" stop-opacity="1"/></linearGradient></defs>
+        <rect x="10" y="10" width="80" height="80" rx="18" fill="url(#g)"></rect>
+        <g transform="translate(22,28)"><path d="M10 4h18v6H10z" fill="#050505"></path><circle cx="20" cy="36" r="10" fill="#050505"></circle></g>
+      </svg>
     </div>
-  </div>
+    <a href="#about">about</a>
+    <a href="#projects">projects</a>
+    <a href="#media">media</a>
+    <a href="#contact">contact</a>
+    <button id="horrorToggle" title="toggle horror mode" style="margin-left:10px;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px">horror</button>
+  </nav>
 
-  <!-- SEPARATOR -->
-  <div class="separator"><img src="content/separator.jpg" draggable="false"></div>
+  <!-- blobs -->
+  <div class="blob a" aria-hidden="true"></div>
+  <div class="blob b" aria-hidden="true"></div>
 
-  <!-- PROJECTS SECTION -->
-  <div class="projects">
-    <pre> 
-______   ______     ______       __     ______     ______     ______   ______    
-/\  == \ /\  == \   /\  __ \     /\ \   /\  ___\   /\  ___\   /\__  _\ /\  ___\   
-\ \  _-/ \ \  __<   \ \ \/\ \   _\_\ \  \ \  __\   \ \ \____  \/_/\ \/ \ \___  \  
- \ \_\    \ \_\ \_\  \ \_____\ /\_____\  \ \_____\  \ \_____\    \ \_\  \/\_____\ 
-  \/_/     \/_/ /_/   \/_____/ \/_____/   \/_____/   \/_____/     \/_/   \/_____/ </pre>
-
-    <div class="project-box">
-      <h2>projects will be added here soon</h2>
-      <p>a curated list of my games, videos, edits, experiments and major releases will appear here later. stay tuned.</p>
+  <!-- hero -->
+  <header class="hero" id="about">
+    <div class="card-hero" role="region" aria-label="intro">
+      <div>
+        <div class="name glitch" data-text="cloverclowzer">cloverclowzer</div>
+        <div class="typewriter" id="typewriter" aria-live="polite"></div>
+        <p class="intro" style="margin-top:14px">game dev, music editor, and weird internet person. i make small spooky projects and chaotic game edits.</p>
+        <div style="height:16px"></div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <a href="https://youtube.com/@cloverclowzer" target="_blank">youtube</a>
+          <a href="https://x.com/cloverclowzer" target="_blank">x</a>
+          <a href="https://open.spotify.com/artist/5vyJkM9zm2Vb1WFIrPtb3R" target="_blank">spotify</a>
+        </div>
+      </div>
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="now-playing" id="nowPlaying">
+          <div class="np-art" id="npArt">art</div>
+          <div class="np-meta">
+            <div class="np-title" id="npTitle">not playing</div>
+            <div class="np-artist" id="npArtist">spotify demo</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="npDemoBtn" style="padding:8px 10px;border-radius:10px;border:0;background:var(--yellow);color:#000;font-weight:700;cursor:pointer">demo play</button>
+          <button id="npManual" style="padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer">manual set</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);">spotify embed (click play to open):</div>
+        <iframe src="https://open.spotify.com/embed/artist/5vyJkM9zm2Vb1WFIrPtb3R" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="border-radius:10px;border:0"></iframe>
+      </aside>
     </div>
-  </div>
+  </header>
 
-  <!-- DISCORD CARD -->
-  <div class="discord-card">
-    <div id="discord-content">
-      <p>loading discord status...</p>
+  <!-- projects -->
+  <main class="projects-wrap" id="projects">
+    <div style="max-width:1100px;margin:0 auto;padding:0 20px">
+      <div class="section-title">projects</div>
+      <div class="projects-grid">
+        <div class="card" data-title="ffy.fi"><div class="tilt"><h3>ffy.fi</h3><p>a language project i help with that teaches finnish</p></div></div>
+        <div class="card" data-title="visc.lol"><div class="tilt"><h3>visc.lol</h3><p>a multi-service platform with high-rich profiles, minigames and more</p></div></div>
+        <div class="card" data-title="waldi's drughouse"><div class="tilt"><h3>waldi's drughouse</h3><p>a raldi's crackhouse inspired game i worked on for a year before quitting due to harassment</p></div></div>
+        <div class="card" data-title="yöjuna"><div class="tilt"><h3>yöjuna</h3><p>a fears-to-fathom style game about a finnish night train and the witnesses who saw something they shouldn't.</p></div></div>
+      </div>
     </div>
-  </div>
+  </main>
 
-  <div class="separator"><img src="content/separator.jpg" draggable="false"></div>
+  <footer id="contact">
+    <div style="max-width:900px;margin:0 auto;padding:20px">contact: &lt;contact@cloverclowzer.is-a.dev&gt; im cloverclowzer</div>
+  </footer>
 
-  <!-- Lanyard Discord Status -->
-  <script src="https://lanyard.cnrad.dev/socket/1315300872435273760"></script>
   <script>
-    window.addEventListener("lanyard", (e) => {
-      const d = e.detail;
-      const avatar = `https://cdn.discordapp.com/avatars/${d.discord_user.id}/${d.discord_user.avatar}.png?size=256`;
-      const status_map = {
-        online: "🟢 online",
-        idle: "🟠 idle",
-        dnd: "🔴 do not disturb",
-        offline: "⚫ offline"
-      };
-      const activity = d.activities?.find(a => a.type === 4);
-      const custom_status = activity ? activity.state : "No custom status";
-      document.getElementById("discord-content").innerHTML = `
-        <img src="${avatar}" draggable="false">
-        <h3>${d.discord_user.username}</h3>
-        <p>${status_map[d.discord_status] || "unknown"}</p>
-        <p>${custom_status}</p>
-      `;
+    // typewriter
+    const phrases=['roblox game dev, and a music creator and entertainer','i make small projects','europe is tuff'];
+    let i=0,j=0,typing=true,out='';
+    const tw=document.getElementById('typewriter');
+    function type(){const current=phrases[i];if(typing){out+=current[j++]||'';tw.textContent=out;if(j>=current.length){typing=false;setTimeout(type,1200);return}setTimeout(type,40+Math.random()*60)}else{out=out.slice(0,-1);tw.textContent=out;if(out.length===0){typing=true;i=(i+1)%phrases.length;j=0;setTimeout(type,400);return}setTimeout(type,22+Math.random()*30)}}
+    setTimeout(type,600);
+
+    // 3d tilt effect on cards
+    const cards=document.querySelectorAll('.card');
+    cards.forEach(card=>{
+      const inner=card.querySelector('.tilt');
+      card.addEventListener('pointermove',e=>{
+        const rect=card.getBoundingClientRect();
+        const x=(e.clientX-rect.left)/rect.width-0.5;
+        const y=(e.clientY-rect.top)/rect.height-0.5;
+        inner.style.transform=`perspective(900px) rotateX(${-y*10}deg) rotateY(${x*12}deg)`;
+      });
+      card.addEventListener('pointerleave',()=>{inner.style.transform='perspective(900px) rotateX(0deg) rotateY(0deg)'});
+    });
+
+    // horror mode toggle
+    const horrorBtn=document.getElementById('horrorToggle');
+    horrorBtn.addEventListener('click',()=>{
+      document.documentElement.classList.toggle('horror');
+      document.body.classList.toggle('horror-body');
+      horrorBtn.style.color=document.documentElement.classList.contains('horror')?'#ff6b6b': 'var(--muted)';
+      if(document.documentElement.classList.contains('horror')){
+        document.body.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:420,iterations:1});
+      }
     });
   </script>
 
-  <script src="script.js"></script>
 </body>
 </html>
