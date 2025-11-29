@@ -1,190 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>cloverclowzer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>cloverclowzer</title>
+<style>
+:root{
+  --yellow:#f5e542;
+  --gold:#ffcc00;
+  --bg:#050505;
+  --card:rgba(25,25,25,0.85);
+  --muted:#bdbdbd;
+  --accent:rgba(245,229,66,0.12);
+  --radius:18px;
+  --transition:300ms cubic-bezier(.2,.9,.2,1);
+}
 
-  <style>
-    :root{
-      --yellow:#f5e542;
-      --bg:#050505;
-      --card:rgba(25,25,25,0.75);
-      --muted:#bdbdbd;
-      --accent:rgba(245,229,66,0.12);
-      --radius:18px;
-      --glass: rgba(255,255,255,0.03);
-      --transition:300ms cubic-bezier(.2,.9,.2,1);
-    }
+/* RESET & BODY */
+*{box-sizing:border-box;margin:0;padding:0;text-transform:lowercase;}
+html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+body{background:linear-gradient(180deg,#050505 0%, #070707 100%);position:relative;overflow-x:hidden;}
 
-    *{box-sizing:border-box;margin:0;padding:0;text-transform:lowercase}
-    html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+/* NAVBAR */
+.nav{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(8px) saturate(120%);border-radius:999px;padding:8px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 30px rgba(0,0,0,0.6);z-index:1000;transition:var(--transition);border:1px solid rgba(255,255,255,0.03);}
+.nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:12px;transition:all 250ms;}
+.nav a:hover{color:var(--yellow);background:linear-gradient(90deg, rgba(255,255,255,0.03), transparent);transform:scale(1.05);}
+.logo-anim{width:46px;height:46px;display:grid;place-items:center;}
 
-    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,#050505 0%, #070707 100%)}
+/* BLOBS */
+.blob{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;mix-blend-mode:screen;z-index:0;}
+.blob.a{width:560px;height:560px;left:-160px;top:-120px;background:radial-gradient(circle, rgba(245,229,66,0.22), rgba(245,229,66,0));animation:floatA 12s ease-in-out infinite;}
+.blob.b{width:420px;height:420px;right:-120px;bottom:-120px;background:radial-gradient(circle, rgba(255,204,0,0.14), rgba(255,204,0,0));animation:floatB 14s ease-in-out infinite;}
+@keyframes floatA{0%{transform:translate(0,0)}50%{transform:translate(50px,-60px)}100%{transform:translate(0,0)}}
+@keyframes floatB{0%{transform:translate(0,0)}50%{transform:translate(-40px,60px)}100%{transform:translate(0,0)}}
 
-    /* floating navbar */
-    .nav{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(8px) saturate(120%);border-radius:999px;padding:8px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 30px rgba(0,0,0,0.6);z-index:1000;transition:var(--transition);border:1px solid rgba(255,255,255,0.03)}
-    .nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:12px}
-    .nav a:hover{color:var(--yellow);background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent)}
+/* HERO */
+.hero{min-height:70vh;display:grid;place-items:center;padding:18vh 20px 6vh;position:relative;overflow:hidden;}
+.card-hero{width:min(1100px,94%);background:var(--card);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden;transition:all 400ms;}
+.card-hero:hover{transform:scale(1.02);}
+.name{font-size:clamp(36px,5vw,48px);color:var(--yellow);font-weight:800;letter-spacing:-1px;margin-bottom:6px;position:relative;}
+.intro{font-size:16px;line-height:1.45;color:var(--muted);}
+.typewriter{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:20px;color:#fff;white-space:nowrap;overflow:hidden;border-right:2px solid rgba(255,255,255,0.12);width:100%;max-width:720px;}
 
-    .logo-anim{width:46px;height:46px;display:grid;place-items:center}
+/* PARTICLES */
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--yellow);opacity:0.6;pointer-events:none;mix-blend-mode:screen;animation:particleMove 6s infinite;}
+@keyframes particleMove{0%{transform:translate(0,0) rotate(0deg);}50%{transform:translate(60px,-80px) rotate(180deg);}100%{transform:translate(0,0) rotate(360deg);}}
 
-    /* blobs */
-    .blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;mix-blend-mode:screen}
-    .blob.a{width:560px;height:560px;left:-160px;top:-120px;background:radial-gradient(circle, rgba(245,229,66,0.22), rgba(245,229,66,0));animation:floatA 12s ease-in-out infinite}
-    .blob.b{width:420px;height:420px;right:-120px;bottom:-120px;background:radial-gradient(circle, rgba(255,140,0,0.14), rgba(255,140,0,0));animation:floatB 14s ease-in-out infinite}
-    @keyframes floatA{0%{transform:translate(0,0)}50%{transform:translate(40px,-60px)}100%{transform:translate(0,0)}}
-    @keyframes floatB{0%{transform:translate(0,0)}50%{transform:translate(-40px,60px)}100%{transform:translate(0,0)}}
+/* NOW PLAYING */
+.now-playing{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center;}
+.np-art{width:64px;height:64px;border-radius:8px;flex:0 0 64px;background:#111;display:grid;place-items:center;font-size:12px;color:var(--muted);}
+.np-meta{flex:1;}
+.np-title{font-weight:700;}
+.np-artist{font-size:13px;color:var(--muted);}
 
-    /* hero */
-    .hero{min-height:68vh;display:grid;place-items:center;padding:18vh 20px 6vh;position:relative}
-    .card-hero{width:min(1100px,94%);background:var(--card);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .name{font-size:48px;color:var(--yellow);font-weight:800;letter-spacing:-1px;margin-bottom:6px}
-    .intro{font-size:16px;line-height:1.45;color:var(--muted)}
+/* PROJECTS */
+.projects-wrap{padding:40px 20px 80px;}
+.section-title{font-size:22px;color:var(--yellow);margin-bottom:18px;}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);transition:transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms;transform-style:preserve-3d;cursor:pointer;position:relative;overflow:hidden;}
+.card:hover{transform:translateY(-10px) rotateX(3deg) rotateY(6deg);box-shadow:0 25px 70px rgba(0,0,0,0.6);}
+.card .tilt{transform-origin:center center;transition:transform 120ms linear;}
+.card::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center, rgba(245,229,66,0.15), transparent 70%);opacity:0;transition:opacity 350ms;}
+.card:hover::after{opacity:1;}
 
-    /* typewriter */
-    .typewriter{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:20px;color:#fff;white-space:nowrap;overflow:hidden;border-right:2px solid rgba(255,255,255,0.12);width:100%;max-width:720px}
+/* GLITCH */
+.glitch{position:relative;display:inline-block;}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.8;}
+.glitch::before{clip-path:polygon(0 0,100% 0,100% 60%,0 60%);transform:translate(-2px,-2px);color:var(--yellow);mix-blend-mode:overlay;opacity:0.9;}
+.glitch::after{clip-path:polygon(0 40%,100% 40%,100% 100%,0 100%);transform:translate(2px,2px);filter:blur(1px);opacity:0.6;}
+@keyframes glitch-anim{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2)}80%{transform:translate(1px,-2px)}100%{transform:translate(0,0)}}
+.glitch{animation:glitch-anim 3.2s infinite;}
 
-    /* now playing */
-    .now-playing{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center}
-    .np-art{width:64px;height:64px;border-radius:8px;flex:0 0 64px;background:#111;display:grid;place-items:center;font-size:12px;color:var(--muted)}
-    .np-meta{flex:1}
-    .np-title{font-weight:700}
-    .np-artist{font-size:13px;color:var(--muted)}
+/* FOOTER */
+footer{padding:40px 20px;text-align:center;color:var(--muted);font-size:13px;position:relative;z-index:1;}
 
-    /* projects */
-    .projects-wrap{padding:40px 20px 80px}
-    .section-title{font-size:22px;color:var(--yellow);margin-bottom:18px}
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);transition:transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms;transform-style:preserve-3d}
-    .card:hover{transform:translateY(-8px) rotateX(3deg) rotateY(6deg);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
-    .card .tilt{transform-origin:center center;transition:transform 120ms linear}
-
-    /* dark-gold glitch */
-    .glitch{position:relative;display:inline-block}
-    .glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.8}
-    .glitch::before{clip-path:polygon(0 0,100% 0,100% 60%,0 60%);transform:translate(-2px,-2px);color:var(--yellow);mix-blend-mode:overlay;opacity:0.9}
-    .glitch::after{clip-path:polygon(0 40%,100% 40%,100% 100%,0 100%);transform:translate(2px,2px);filter:blur(1px);opacity:0.6}
-    @keyframes glitch-anim{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2px)}80%{transform:translate(1px,-2px)}100%{transform:translate(0,0)}}
-    .glitch{animation:glitch-anim 3.2s infinite}
-
-    /* horror mode */
-    .horror-body{background:linear-gradient(180deg,#050000,#000506)}
-    .horror .card{border-color:rgba(255,0,30,0.16);box-shadow:0 20px 80px rgba(255,0,20,0.06)}
-    .horror .blob.a{background:radial-gradient(circle, rgba(255,0,20,0.14), rgba(255,0,20,0))}
-    .horror .name{color:#ff3b3b}
-    .horror .typewriter{border-right-color:rgba(255,0,20,0.85)}
-    .horror .glitch::before{color:#ffef00;mix-blend-mode:screen}
-
-    footer{padding:40px 20px;text-align:center;color:var(--muted);font-size:13px}
-    @media (max-width:900px){.card-hero{grid-template-columns:1fr;gap:18px;padding:28px}.nav{left:12px;transform:none}}
-  </style>
+/* MEDIA */
+@media (max-width:900px){.card-hero{grid-template-columns:1fr;gap:18px;padding:28px}.nav{left:12px;transform:none;}}
+</style>
 </head>
 <body>
 
-  <!-- floating navbar -->
-  <nav class="nav" aria-label="main nav">
-    <div class="logo-anim" aria-hidden="true">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.9"/><stop offset="1" stop-color="#f5e542" stop-opacity="1"/></linearGradient></defs>
-        <rect x="10" y="10" width="80" height="80" rx="18" fill="url(#g)"></rect>
-        <g transform="translate(22,28)"><path d="M10 4h18v6H10z" fill="#050505"></path><circle cx="20" cy="36" r="10" fill="#050505"></circle></g>
-      </svg>
+<!-- NAVBAR -->
+<nav class="nav">
+<div class="logo-anim">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.9"/><stop offset="1" stop-color="#f5e542" stop-opacity="1"/></linearGradient></defs>
+    <rect x="10" y="10" width="80" height="80" rx="18" fill="url(#g)"></rect>
+  </svg>
+</div>
+<a href="#about">about</a>
+<a href="#projects">projects</a>
+<a href="#contact">contact</a>
+<button id="horrorToggle" title="toggle horror mode" style="margin-left:10px;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px">horror</button>
+</nav>
+
+<!-- BLOBS -->
+<div class="blob a"></div>
+<div class="blob b"></div>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- HERO -->
+<header class="hero" id="about">
+<div class="card-hero">
+  <div>
+    <div class="name glitch" data-text="cloverclowzer">cloverclowzer</div>
+    <div class="typewriter" id="typewriter"></div>
+    <p class="intro" style="margin-top:14px">game dev, music editor, and weird internet person. i make small spooky projects and chaotic game edits.</p>
+    <div style="margin-top:10px;">
+      <a href="https://youtube.com/@cloverclowzer" target="_blank">youtube</a>
+      <a href="https://x.com/cloverclowzer" target="_blank">x</a>
+      <a href="https://open.spotify.com/artist/5vyJkM9zm2Vb1WFIrPtb3R" target="_blank">spotify</a>
     </div>
-    <a href="#about">about</a>
-    <a href="#projects">projects</a>
-    <a href="#media">media</a>
-    <a href="#contact">contact</a>
-    <button id="horrorToggle" title="toggle horror mode" style="margin-left:10px;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px">horror</button>
-  </nav>
-
-  <!-- blobs -->
-  <div class="blob a" aria-hidden="true"></div>
-  <div class="blob b" aria-hidden="true"></div>
-
-  <!-- hero -->
-  <header class="hero" id="about">
-    <div class="card-hero" role="region" aria-label="intro">
-      <div>
-        <div class="name glitch" data-text="cloverclowzer">cloverclowzer</div>
-        <div class="typewriter" id="typewriter" aria-live="polite"></div>
-        <p class="intro" style="margin-top:14px">game dev, music editor, and weird internet person. i make small spooky projects and chaotic game edits.</p>
-        <div style="height:16px"></div>
-        <div style="display:flex;gap:10px;align-items:center">
-          <a href="https://youtube.com/@cloverclowzer" target="_blank">youtube</a>
-          <a href="https://x.com/cloverclowzer" target="_blank">x</a>
-          <a href="https://open.spotify.com/artist/5vyJkM9zm2Vb1WFIrPtb3R" target="_blank">spotify</a>
-        </div>
-      </div>
-      <aside style="display:flex;flex-direction:column;gap:12px">
-        <div class="now-playing" id="nowPlaying">
-          <div class="np-art" id="npArt">art</div>
-          <div class="np-meta">
-            <div class="np-title" id="npTitle">not playing</div>
-            <div class="np-artist" id="npArtist">spotify demo</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button id="npDemoBtn" style="padding:8px 10px;border-radius:10px;border:0;background:var(--yellow);color:#000;font-weight:700;cursor:pointer">demo play</button>
-          <button id="npManual" style="padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer">manual set</button>
-        </div>
-        <div style="font-size:12px;color:var(--muted);">spotify embed (click play to open):</div>
-        <iframe src="https://open.spotify.com/embed/artist/5vyJkM9zm2Vb1WFIrPtb3R" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="border-radius:10px;border:0"></iframe>
-      </aside>
-    </div>
-  </header>
-
-  <!-- projects -->
-  <main class="projects-wrap" id="projects">
-    <div style="max-width:1100px;margin:0 auto;padding:0 20px">
-      <div class="section-title">projects</div>
-      <div class="projects-grid">
-        <div class="card" data-title="ffy.fi"><div class="tilt"><h3>ffy.fi</h3><p>a language project i help with that teaches finnish</p></div></div>
-        <div class="card" data-title="visc.lol"><div class="tilt"><h3>visc.lol</h3><p>a multi-service platform with high-rich profiles, minigames and more</p></div></div>
-        <div class="card" data-title="waldi's drughouse"><div class="tilt"><h3>waldi's drughouse</h3><p>a raldi's crackhouse inspired game i worked on for a year before quitting due to harassment</p></div></div>
-        <div class="card" data-title="yöjuna"><div class="tilt"><h3>yöjuna</h3><p>a fears-to-fathom style game about a finnish night train and the witnesses who saw something they shouldn't.</p></div></div>
-                <div class="card" data-title="yöjuna"><div class="tilt"><h3>orphille studios</h3><p>anime and a manga studio i made with one of my homies (orphille.ct.ws)</p></div></div>
+  </div>
+  <aside style="display:flex;flex-direction:column;gap:12px">
+    <div class="now-playing" id="nowPlaying">
+      <div class="np-art" id="npArt">art</div>
+      <div class="np-meta">
+        <div class="np-title" id="npTitle">not playing</div>
+        <div class="np-artist" id="npArtist">spotify demo</div>
       </div>
     </div>
-  </main>
+  </aside>
+</div>
+</header>
 
-  <footer id="contact">
-    <div style="max-width:900px;margin:0 auto;padding:20px">contact: &lt;contact@cloverclowzer.is-a.dev&gt; im cloverclowzer</div>
-  </footer>
+<!-- PROJECTS -->
+<main class="projects-wrap" id="projects">
+<div style="max-width:1100px;margin:0 auto;padding:0 20px">
+  <div class="section-title">projects</div>
+  <div class="projects-grid">
+    <div class="card" data-title="ffy.fi"><div class="tilt"><h3>ffy.fi</h3><p>a language project i help with that teaches finnish</p></div></div>
+    <div class="card" data-title="visc.lol"><div class="tilt"><h3>visc.lol</h3><p>a multi-service platform with high-rich profiles, minigames and more</p></div></div>
+    <div class="card" data-title="waldi's drughouse"><div class="tilt"><h3>waldi's drughouse</h3><p>a raldi's crackhouse inspired game i worked on for a year before quitting due to harassment</p></div></div>
+    <div class="card" data-title="yöjuna"><div class="tilt"><h3>yöjuna</h3><p>a fears-to-fathom style game about a finnish night train and the witnesses who saw something they shouldn't.</p></div></div>
+  </div>
+</div>
+</main>
 
-  <script>
-    // typewriter
-    const phrases=['roblox game dev, and a music creator and entertainer','i make small projects','europe is tuff'];
-    let i=0,j=0,typing=true,out='';
-    const tw=document.getElementById('typewriter');
-    function type(){const current=phrases[i];if(typing){out+=current[j++]||'';tw.textContent=out;if(j>=current.length){typing=false;setTimeout(type,1200);return}setTimeout(type,40+Math.random()*60)}else{out=out.slice(0,-1);tw.textContent=out;if(out.length===0){typing=true;i=(i+1)%phrases.length;j=0;setTimeout(type,400);return}setTimeout(type,22+Math.random()*30)}}
-    setTimeout(type,600);
+<!-- FOOTER -->
+<footer id="contact">
+  <div>contact: &lt;contact@cloverclowzer.is-a.dev&gt; im cloverclowzer</div>
+</footer>
 
-    // 3d tilt effect on cards
-    const cards=document.querySelectorAll('.card');
-    cards.forEach(card=>{
-      const inner=card.querySelector('.tilt');
-      card.addEventListener('pointermove',e=>{
-        const rect=card.getBoundingClientRect();
-        const x=(e.clientX-rect.left)/rect.width-0.5;
-        const y=(e.clientY-rect.top)/rect.height-0.5;
-        inner.style.transform=`perspective(900px) rotateX(${-y*10}deg) rotateY(${x*12}deg)`;
-      });
-      card.addEventListener('pointerleave',()=>{inner.style.transform='perspective(900px) rotateX(0deg) rotateY(0deg)'});
-    });
+<script>
+// Typewriter
+const phrases=['roblox game dev 🎮','music creator 🎵','small spooky projects 👻','chaotic edits 😈'];
+let i=0,j=0,typing=true,out='';
+const tw=document.getElementById('typewriter');
+function type(){
+  const current=phrases[i];
+  if(typing){
+    out+=current[j++]||'';
+    tw.textContent=out;
+    if(j>=current.length){typing=false;setTimeout(type,1200);return;}
+    setTimeout(type,40+Math.random()*60);
+  } else {
+    out=out.slice(0,-1);
+    tw.textContent=out;
+    if(out.length===0){typing=true;i=(i+1)%phrases.length;j=0;setTimeout(type,400);return;}
+    setTimeout(type,22+Math.random()*30);
+  }
+}
+setTimeout(type,600);
 
-    // horror mode toggle
-    const horrorBtn=document.getElementById('horrorToggle');
-    horrorBtn.addEventListener('click',()=>{
-      document.documentElement.classList.toggle('horror');
-      document.body.classList.toggle('horror-body');
-      horrorBtn.style.color=document.documentElement.classList.contains('horror')?'#ff6b6b': 'var(--muted)';
-      if(document.documentElement.classList.contains('horror')){
-        document.body.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:420,iterations:1});
-      }
-    });
-  </script>
+// Tilt cards
+const cards=document.querySelectorAll('.card');
+cards.forEach(card=>{
+  const inner=card.querySelector('.tilt');
+  card.addEventListener('pointermove',e=>{
+    const rect=card.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-0.5;
+    const y=(e.clientY-rect.top)/rect.height-0.5;
+    inner.style.transform=`perspective(900px) rotateX(${-y*10}deg) rotateY(${x*12}deg)`;
+  });
+  card.addEventListener('pointerleave',()=>{inner.style.transform='perspective(900px) rotateX(0deg) rotateY(0deg)';});
+});
+
+// Horror toggle
+const horrorBtn=document.getElementById('horrorToggle');
+horrorBtn.addEventListener('click',()=>{
+  document.documentElement.classList.toggle('horror');
+  document.body.classList.toggle('horror-body');
+  horrorBtn.style.color=document.documentElement.classList.contains('horror')?'#ff6b6b': 'var(--muted)';
+  if(document.documentElement.classList.contains('horror')){
+    document.body.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:420,iterations:1});
+  }
+});
+
+// Particles
+const particlesContainer=document.getElementById('particles');
+for(let k=0;k<30;k++){
+  const p=document.createElement('div');
+  p.classList.add('particle');
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
+  p.style.width=(Math.random()*4+2)+'px';
+  p.style.height=(Math.random()*4+2)+'px';
+  p.style.animationDuration=(4+Math.random()*4)+'s';
+  particlesContainer.appendChild(p);
+}
+</script>
 
 </body>
 </html>
