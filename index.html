@@ -1,210 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>cloverclowzer</title>
-<style>
-:root{
-  --yellow:#f5e542;
-  --gold:#ffcc00;
-  --bg:#050505;
-  --card:rgba(25,25,25,0.85);
-  --muted:#bdbdbd;
-  --accent:rgba(245,229,66,0.12);
-  --radius:18px;
-  --transition:300ms cubic-bezier(.2,.9,.2,1);
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>cloverclowzer • portfolio</title>
 
-/* RESET & BODY */
-*{box-sizing:border-box;margin:0;padding:0;text-transform:lowercase;}
-html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;}
-body{background:linear-gradient(180deg,#050505 0%, #070707 100%);position:relative;overflow-x:hidden;}
+  <style>
+    :root{
+      --yellow:#f5e542;
+      --bg:#050505;
+      --card:rgba(25,25,25,0.75);
+      --muted:#bdbdbd;
+      --accent:rgba(245,229,66,0.12);
+      --radius:18px;
+      --glass: rgba(255,255,255,0.03);
+      --transition:300ms cubic-bezier(.2,.9,.2,1);
+    }
 
-/* NAVBAR */
-.nav{position:fixed;left:50%;transform:translateX(-50%);top:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(8px) saturate(120%);border-radius:999px;padding:8px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 30px rgba(0,0,0,0.6);z-index:1000;transition:var(--transition);border:1px solid rgba(255,255,255,0.03);}
-.nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:12px;transition:all 250ms;}
-.nav a:hover{color:var(--yellow);background:linear-gradient(90deg, rgba(255,255,255,0.03), transparent);transform:scale(1.05);}
-.logo-anim{width:46px;height:46px;display:grid;place-items:center;}
+    /* ===== reset & base ===== */
+    *{box-sizing:border-box;margin:0;padding:0;text-transform:lowercase}
+    html,body{height:100%;background:var(--bg);color:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:var(--yellow);text-decoration:none}
+    button{font-family:inherit}
 
-/* BLOBS */
-.blob{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;mix-blend-mode:screen;z-index:0;}
-.blob.a{width:560px;height:560px;left:-160px;top:-120px;background:radial-gradient(circle, rgba(245,229,66,0.22), rgba(245,229,66,0));animation:floatA 12s ease-in-out infinite;}
-.blob.b{width:420px;height:420px;right:-120px;bottom:-120px;background:radial-gradient(circle, rgba(255,204,0,0.14), rgba(255,204,0,0));animation:floatB 14s ease-in-out infinite;}
-@keyframes floatA{0%{transform:translate(0,0)}50%{transform:translate(50px,-60px)}100%{transform:translate(0,0)}}
-@keyframes floatB{0%{transform:translate(0,0)}50%{transform:translate(-40px,60px)}100%{transform:translate(0,0)}}
+    /* ===== floating navbar ===== */
+    .nav{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      top:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      backdrop-filter:blur(8px) saturate(120%);
+      border-radius:999px;
+      padding:8px 14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      box-shadow:0 6px 30px rgba(0,0,0,0.6);
+      z-index:1000;
+      transition:var(--transition);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:12px}
+    .nav a:hover{color:var(--yellow);background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent)}
+    .nav .logo-anim{width:46px;height:46px;display:grid;place-items:center}
 
-/* HERO */
-.hero{min-height:70vh;display:grid;place-items:center;padding:18vh 20px 6vh;position:relative;overflow:hidden;}
-.card-hero{width:min(1100px,94%);background:var(--card);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;box-shadow:0 20px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden;transition:all 400ms;}
-.card-hero:hover{transform:scale(1.02);}
-.name{font-size:clamp(36px,5vw,48px);color:var(--yellow);font-weight:800;letter-spacing:-1px;margin-bottom:6px;position:relative;}
-.intro{font-size:16px;line-height:1.45;color:var(--muted);}
-.typewriter{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;font-size:20px;color:#fff;white-space:nowrap;overflow:hidden;border-right:2px solid rgba(255,255,255,0.12);width:100%;max-width:720px;}
+    /* ===== aesthetic blobs ===== */
+    .blob{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;mix-blend-mode:screen;z-index:-1}
+    .blob.a{width:560px;height:560px;left:-160px;top:-120px;background:radial-gradient(circle, rgba(245,229,66,0.22), rgba(245,229,66,0));animation:floatA 12s ease-in-out infinite}
+    .blob.b{width:420px;height:420px;right:-120px;bottom:-120px;background:radial-gradient(circle, rgba(255,140,0,0.14), rgba(255,140,0,0));animation:floatB 14s ease-in-out infinite}
+    @keyframes floatA{0%{transform:translate(0,0)}50%{transform:translate(40px,-60px)}100%{transform:translate(0,0)}}
+    @keyframes floatB{0%{transform:translate(0,0)}50%{transform:translate(-40px,60px)}100%{transform:translate(0,0)}}
 
-/* PARTICLES */
-.particle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--yellow);opacity:0.6;pointer-events:none;mix-blend-mode:screen;animation:particleMove 6s infinite;}
-@keyframes particleMove{0%{transform:translate(0,0) rotate(0deg);}50%{transform:translate(60px,-80px) rotate(180deg);}100%{transform:translate(0,0) rotate(360deg);}}
+    /* ===== hero / intro ===== */
+    .hero{min-height:68vh;display:grid;place-items:center;padding:16vh 20px 6vh;position:relative}
+    .card-hero{
+      width:min(1100px,94%);
+      background:var(--card);
+      border-radius:20px;
+      padding:48px;
+      display:grid;
+      grid-template-columns:1fr 380px;
+      gap:28px;
+      align-items:center;
+      box-shadow:0 20px 60px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .name{font-size:48px;color:var(--yellow);font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+    .intro{font-size:16px;line-height:1.45;color:var(--muted)}
 
-/* NOW PLAYING */
-.now-playing{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center;}
-.np-art{width:64px;height:64px;border-radius:8px;flex:0 0 64px;background:#111;display:grid;place-items:center;font-size:12px;color:var(--muted);}
-.np-meta{flex:1;}
-.np-title{font-weight:700;}
-.np-artist{font-size:13px;color:var(--muted);}
+    /* typewriter (main) */
+    .typewriter{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size:20px;color:#fff;white-space:nowrap;overflow:hidden;
+      border-right:2px solid rgba(255,255,255,0.12);width:100%;max-width:720px;
+    }
 
-/* PROJECTS */
-.projects-wrap{padding:40px 20px 80px;}
-.section-title{font-size:22px;color:var(--yellow);margin-bottom:18px;}
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);transition:transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms;transform-style:preserve-3d;cursor:pointer;position:relative;overflow:hidden;}
-.card:hover{transform:translateY(-10px) rotateX(3deg) rotateY(6deg);box-shadow:0 25px 70px rgba(0,0,0,0.6);}
-.card .tilt{transform-origin:center center;transition:transform 120ms linear;}
-.card::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center, rgba(245,229,66,0.15), transparent 70%);opacity:0;transition:opacity 350ms;}
-.card:hover::after{opacity:1;}
+    /* ===== now playing ===== */
+    .now-playing{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center}
+    .np-art{width:64px;height:64px;border-radius:8px;flex:0 0 64px;background:#111;display:grid;place-items:center;font-size:12px;color:var(--muted)}
+    .np-meta{flex:1}
+    .np-title{font-weight:700}
+    .np-artist{font-size:13px;color:var(--muted)}
 
-/* GLITCH */
-.glitch{position:relative;display:inline-block;}
-.glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.8;}
-.glitch::before{clip-path:polygon(0 0,100% 0,100% 60%,0 60%);transform:translate(-2px,-2px);color:var(--yellow);mix-blend-mode:overlay;opacity:0.9;}
-.glitch::after{clip-path:polygon(0 40%,100% 40%,100% 100%,0 100%);transform:translate(2px,2px);filter:blur(1px);opacity:0.6;}
-@keyframes glitch-anim{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2)}80%{transform:translate(1px,-2px)}100%{transform:translate(0,0)}}
-.glitch{animation:glitch-anim 3.2s infinite;}
+    /* ===== projects grid ===== */
+    .projects-wrap{padding:40px 20px 80px}
+    .section-title{font-size:22px;color:var(--yellow);margin-bottom:18px}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
 
-/* FOOTER */
-footer{padding:40px 20px;text-align:center;color:var(--muted);font-size:13px;position:relative;z-index:1;}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03);transition:transform 280ms cubic-bezier(.2,.9,.2,1), box-shadow 280ms;transform-style:preserve-3d}
+    .card:hover{transform:translateY(-8px) rotateX(3deg) rotateY(6deg);box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+    .card h3{margin-bottom:8px;font-size:18px;color:var(--yellow)}
+    .card p{color:var(--muted);font-size:14px;line-height:1.5}
+    .card .tilt{transform-origin:center center;transition:transform 120ms linear}
 
-/* MEDIA */
-@media (max-width:900px){.card-hero{grid-template-columns:1fr;gap:18px;padding:28px}.nav{left:12px;transform:none;}}
-</style>
+    /* ===== glitch heading ===== */
+    .glitch{position:relative;display:inline-block}
+    .glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.8}
+    .glitch::before{clip-path:polygon(0 0,100% 0,100% 60%,0 60%);transform:translate(-2px,-2px);color:var(--yellow);mix-blend-mode:overlay;opacity:0.9}
+    .glitch::after{clip-path:polygon(0 40%,100% 40%,100% 100%,0 100%);transform:translate(2px,2px);filter:blur(1px);opacity:0.6}
+    @keyframes glitch-anim{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2px)}80%{transform:translate(1px,-2px)}100%{transform:translate(0,0)}}
+    .glitch{animation:glitch-anim 3.2s infinite}
+
+    /* ===== aliases section ===== */
+    #aliases{padding:110px 20px;min-height:80vh;display:flex;justify-content:center;align-items:flex-start;background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.001) 100%)}
+    .aliases-container{width:min(900px,94%);display:flex;flex-direction:column;align-items:center;text-align:center}
+    .alias-typewriter{font-family:monospace;color:#e5c16f;opacity:1;margin-bottom:12px;white-space:nowrap;overflow:hidden;border-right:2px solid #e5c16f;width:0}
+    @keyframes typingIntro{from{width:0}to{width:20ch}}
+    .alias-typewriter.playing{animation:typingIntro 2.2s steps(20) forwards}
+    .glitch-title{font-size:3.2rem;font-weight:900;color:#e5c16f;margin:8px 0 22px;position:relative}
+    .glitch-title::before,.glitch-title::after{content:attr(data-text);position:absolute;left:0;top:0;opacity:0.6}
+    .glitch-title::before{left:2px;text-shadow:-2px 0 #fcad36;animation:glitchMove 1.8s infinite}
+    .glitch-title::after{left:-2px;text-shadow:2px 0 #ffea9c;animation:glitchMove2 2s infinite}
+    @keyframes glitchMove{0%{clip-path:inset(0 0 70% 0)}50%{clip-path:inset(20% 0 30% 0)}100%{clip-path:inset(0 0 70% 0)}}
+    @keyframes glitchMove2{0%{clip-path:inset(60% 0 10% 0)}50%{clip-path:inset(10% 0 50% 0)}100%{clip-path:inset(60% 0 10% 0)}}
+
+    .alias-list{display:grid;gap:18px;width:100%;max-width:640px;margin-top:10px}
+    .alias-item{padding:18px 26px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;backdrop-filter:blur(12px);font-size:1.2rem;color:#fff;transition:transform .25s ease,box-shadow .25s ease,opacity .5s;cursor:pointer;opacity:0;transform:translateY(20px)}
+    .alias-item.visible{opacity:1;transform:translateY(0)}
+    .alias-item:hover{transform:rotateX(5deg) rotateY(-6deg) scale(1.03);box-shadow:0 0 25px rgba(229,193,111,0.4)}
+    .main-alias{border-color:rgba(229,193,111,0.6);color:#e5c16f}
+    .shuffle-btn{background:rgba(229,193,111,0.15);border:1px solid rgba(229,193,111,0.4);color:#e5c16f;padding:10px 20px;margin:18px 0;border-radius:10px;cursor:pointer;transition:transform .2s;backdrop-filter:blur(8px)}
+    .shuffle-btn:hover{transform:scale(1.04)}
+
+    /* ===== footer ===== */
+    footer{padding:40px 20px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* ===== responsive tweaks ===== */
+    @media (max-width:900px){
+      .card-hero{grid-template-columns:1fr;gap:18px;padding:28px}
+      .nav{left:12px;transform:none}
+      .name{font-size:36px}
+      .glitch-title{font-size:2.2rem}
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="nav">
-<div class="logo-anim">
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.9"/><stop offset="1" stop-color="#f5e542" stop-opacity="1"/></linearGradient></defs>
-    <rect x="10" y="10" width="80" height="80" rx="18" fill="url(#g)"></rect>
-  </svg>
-</div>
-<a href="#about">about</a>
-<a href="#projects">projects</a>
-<a href="#contact">contact</a>
-<button id="horrorToggle" title="toggle horror mode" style="margin-left:10px;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px">horror</button>
-</nav>
-
-<!-- BLOBS -->
-<div class="blob a"></div>
-<div class="blob b"></div>
-
-<!-- PARTICLES -->
-<div id="particles"></div>
-
-<!-- HERO -->
-<header class="hero" id="about">
-<div class="card-hero">
-  <div>
-    <div class="name glitch" data-text="cloverclowzer">cloverclowzer</div>
-    <div class="typewriter" id="typewriter"></div>
-    <p class="intro" style="margin-top:14px">game dev, music editor, and weird internet person. i make small spooky projects and chaotic game edits.</p>
-    <div style="margin-top:10px;">
-      <a href="https://youtube.com/@cloverclowzer" target="_blank">youtube</a>
-      <a href="https://x.com/cloverclowzer" target="_blank">x</a>
-      <a href="https://open.spotify.com/artist/5vyJkM9zm2Vb1WFIrPtb3R" target="_blank">spotify</a>
+  <!-- ===== navbar ===== -->
+  <nav class="nav" aria-label="main nav">
+    <div class="logo-anim" aria-hidden="true">
+      <!-- animated-ish svg logo (simple, accessible) -->
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="cloverclowzer logo">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#f5e542" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="10" width="80" height="80" rx="18" fill="url(#g)"></rect>
+        <g transform="translate(22,28)">
+          <path d="M10 4h18v6H10z" fill="#050505"></path>
+          <circle cx="20" cy="36" r="10" fill="#050505"></circle>
+        </g>
+      </svg>
     </div>
-  </div>
-  <aside style="display:flex;flex-direction:column;gap:12px">
-    <div class="now-playing" id="nowPlaying">
-      <div class="np-art" id="npArt">art</div>
-      <div class="np-meta">
-        <div class="np-title" id="npTitle">not playing</div>
-        <div class="np-artist" id="npArtist">spotify demo</div>
+
+    <a href="#about" class="nav-link">about</a>
+    <a href="#projects" class="nav-link">projects</a>
+    <a href="#media" class="nav-link">media</a>
+    <a href="#aliases" class="nav-link">/aliases</a>
+    <a href="#contact" class="nav-link">contact</a>
+
+    <button id="horrorToggle" title="toggle horror mode" style="margin-left:8px;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px">horror</button>
+  </nav>
+
+  <!-- ===== blobs ===== -->
+  <div class="blob a" aria-hidden="true"></div>
+  <div class="blob b" aria-hidden="true"></div>
+
+  <!-- ===== hero / about ===== -->
+  <header class="hero" id="about">
+    <div class="card-hero" role="region" aria-label="intro">
+      <div>
+        <div class="name glitch" data-text="cloverclowzer">cloverclowzer</div>
+        <div style="height:8px"></div>
+        <div class="typewriter" id="typewriter" aria-live="polite"></div>
+        <p class="intro" style="margin-top:12px">game dev, music editor, and weird internet person. i make small spooky projects and chaotic game edits.</p>
+
+        <div style="height:14px"></div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <a href="https://youtube.com/@cloverclowzer" target="_blank" rel="noopener">youtube</a>
+          <a href="https://x.com/cloverclowzer" target="_blank" rel="noopener">x</a>
+          <a href="https://open.spotify.com/artist/5vyJkM9zm2Vb1WFIrPtb3R" target="_blank" rel="noopener">spotify</a>
+        </div>
+      </div>
+
+      <aside style="display:flex;flex-direction:column;gap:12px">
+        <div class="now-playing" id="nowPlaying">
+          <div class="np-art" id="npArt">art</div>
+          <div class="np-meta">
+            <div class="np-title" id="npTitle">not playing</div>
+            <div class="np-artist" id="npArtist">spotify demo</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <button id="npDemoBtn" style="padding:8px 10px;border-radius:10px;border:0;background:var(--yellow);color:#000;font-weight:700;cursor:pointer">demo play</button>
+          <button id="npManual" style="padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer">manual set</button>
+        </div>
+
+        <div style="font-size:12px;color:var(--muted);">spotify embed (click play to open):</div>
+        <iframe src="https://open.spotify.com/embed/artist/5vyJkM9zm2Vb1WFIrPtb3R" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="border-radius:10px;border:0"></iframe>
+      </aside>
+    </div>
+  </header>
+
+  <!-- ===== projects ===== -->
+  <main class="projects-wrap" id="projects">
+    <div style="max-width:1100px;margin:0 auto;padding:0 20px">
+      <div class="section-title">projects</div>
+      <div class="projects-grid">
+        <div class="card" data-title="ffy.fi"><div class="tilt"><h3>ffy.fi</h3><p>a language project i help with that teaches finnish in tiny, bite-sized puzzles and micro-lessons.</p></div></div>
+        <div class="card" data-title="visc.lol"><div class="tilt"><h3>visc.lol</h3><p>a multi-service platform with high-rich profiles. i've been building backend bits and profile ui experiments.</p></div></div>
+        <div class="card" data-title="waldi's drughouse"><div class="tilt"><h3>waldi's drughouse</h3><p>a raldi's crackhouse inspired game i worked on for a year before quitting due to harassment. it was messy and brilliant.</p></div></div>
+        <div class="card" data-title="yöjuna"><div class="tilt"><h3>yöjuna</h3><p>a fears-to-fathom style game about a finnish night train and the witnesses who saw something they shouldn't.</p></div></div>
       </div>
     </div>
-  </aside>
-</div>
-</header>
+  </main>
 
-<!-- PROJECTS -->
-<main class="projects-wrap" id="projects">
-<div style="max-width:1100px;margin:0 auto;padding:0 20px">
-  <div class="section-title">projects</div>
-  <div class="projects-grid">
-    <div class="card" data-title="ffy.fi"><div class="tilt"><h3>ffy.fi</h3><p>a language project i help with that teaches finnish</p></div></div>
-    <div class="card" data-title="visc.lol"><div class="tilt"><h3>visc.lol</h3><p>a multi-service platform with high-rich profiles, minigames and more</p></div></div>
-    <div class="card" data-title="waldi's drughouse"><div class="tilt"><h3>Waldi's Drughouse</h3><p>a raldi's crackhouse inspired game i worked on for a year before quitting due to harassment</p></div></div>
-    <div class="card" data-title="yöjuna"><div class="tilt"><h3>Yöjuna</h3><p>a fears-to-fathom style game about a finnish night train and the witnesses who saw something they shouldn't.</p></div></div>
-    <div class="card" data-title="orphille"><div class="tilt"><h3>Orphille Studios</h3><p>anime studio i made with a friend (website: orphille.ct.ws)</p></div></div>
-      <div class="card" data-title="trainbot"><div class="tilt"><h3>TrainBOT</h3><p>discord bot i made for fun (inspired by catbot.shop) trainbot.ct.ws</p></div></div>
-        <div class="card" data-title="portfolio"><div class="tilt"><h3>cloverclowzer.is-a.dev</h3><p>my portfolio</p></div></div>
-  </div>
-</div>
-</main>
+  <!-- ===== aliases (new) ===== -->
+  <section id="aliases" class="page">
+    <div class="aliases-container">
+      <div id="aliasIntroWrap" style="display:flex;flex-direction:column;align-items:center">
+        <div id="aliasTypewriter" class="alias-typewriter" aria-live="polite"></div>
+        <h2 class="glitch-title" data-text="/aliases">/aliases</h2>
+        <button id="shuffleBtn" class="shuffle-btn">shuffle aliases</button>
+      </div>
 
-<!-- FOOTER -->
-<footer id="contact">
-  <div>contact: &lt;contact@cloverclowzer.is-a.dev&gt; im cloverclowzer</div>
-</footer>
+      <div class="alias-list" id="aliasList">
+        <div class="alias-item">3rror</div>
+        <div class="alias-item">vibrovision</div>
+        <div class="alias-item">vortexterminus</div>
+        <div class="alias-item">zerons</div>
+        <div class="alias-item">imurcowboy</div>
+        <div class="alias-item main-alias">cloverclowzer <span style="opacity:.8;margin-left:8px;font-size:.85rem">(main)</span></div>
+      </div>
+    </div>
+  </section>
 
-<script>
-// Typewriter
-const phrases=['yt content creator','game developer','boring dude ig','spotify artist'];
-let i=0,j=0,typing=true,out='';
-const tw=document.getElementById('typewriter');
-function type(){
-  const current=phrases[i];
-  if(typing){
-    out+=current[j++]||'';
-    tw.textContent=out;
-    if(j>=current.length){typing=false;setTimeout(type,1200);return;}
-    setTimeout(type,40+Math.random()*60);
-  } else {
-    out=out.slice(0,-1);
-    tw.textContent=out;
-    if(out.length===0){typing=true;i=(i+1)%phrases.length;j=0;setTimeout(type,400);return;}
-    setTimeout(type,22+Math.random()*30);
-  }
-}
-setTimeout(type,600);
+  <!-- ===== footer / contact ===== -->
+  <footer id="contact">
+    <div style="max-width:900px;margin:0 auto;padding:20px">contact: &lt;contact@oyen.cc&gt; • built by cloverclowzer • all lowercase, all mood</div>
+  </footer>
 
-// Tilt cards
-const cards=document.querySelectorAll('.card');
-cards.forEach(card=>{
-  const inner=card.querySelector('.tilt');
-  card.addEventListener('pointermove',e=>{
-    const rect=card.getBoundingClientRect();
-    const x=(e.clientX-rect.left)/rect.width-0.5;
-    const y=(e.clientY-rect.top)/rect.height-0.5;
-    inner.style.transform=`perspective(900px) rotateX(${-y*10}deg) rotateY(${x*12}deg)`;
-  });
-  card.addEventListener('pointerleave',()=>{inner.style.transform='perspective(900px) rotateX(0deg) rotateY(0deg)';});
-});
+  <!-- ===== scripts ===== -->
+  <script>
+    /*********************
+     core interactions:
+      - typewriter (hero)
+      - demo now-playing
+      - 3d tilt on cards
+      - nav smooth scroll
+      - aliases typewriter + stagger + shuffle
+      - horror toggle
+    *********************/
 
-// Horror toggle
-const horrorBtn=document.getElementById('horrorToggle');
-horrorBtn.addEventListener('click',()=>{
-  document.documentElement.classList.toggle('horror');
-  document.body.classList.toggle('horror-body');
-  horrorBtn.style.color=document.documentElement.classList.contains('horror')?'#ff6b6b': 'var(--muted)';
-  if(document.documentElement.classList.contains('horror')){
-    document.body.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:420,iterations:1});
-  }
-});
+    /* ---------- main typewriter (hero) ---------- */
+    (function(){
+      const phrases = [
+        'game dev. music editor. backrooms fan.',
+        'i make spooky small projects and chaotic edits.',
+        'based in europe. vibes: yellow & glitch.'
+      ];
+      let pi = 0, pj = 0, typing = true, out = '';
+      const tw = document.getElementById('typewriter');
+      function type(){
+        const current = phrases[pi];
+        if(typing){
+          out += current[pj++] || '';
+          tw.textContent = out;
+          if(pj >= current.length){ typing=false; setTimeout(type, 1100); return; }
+          setTimeout(type, 40 + Math.random()*60);
+        } else {
+          out = out.slice(0, -1);
+          tw.textContent = out;
+          if(out.length === 0){ typing=true; pi = (pi+1) % phrases.length; pj=0; setTimeout(type, 500); return; }
+          setTimeout(type, 22 + Math.random()*30);
+        }
+      }
+      setTimeout(type, 600);
+    })();
 
-// Particles
-const particlesContainer=document.getElementById('particles');
-for(let k=0;k<30;k++){
-  const p=document.createElement('div');
-  p.classList.add('particle');
-  p.style.left=Math.random()*100+'%';
-  p.style.top=Math.random()*100+'%';
-  p.style.width=(Math.random()*4+2)+'px';
-  p.style.height=(Math.random()*4+2)+'px';
-  p.style.animationDuration=(4+Math.random()*4)+'s';
-  particlesContainer.appendChild(p);
-}
-</script>
+    /* ---------- demo now playing ---------- */
+    (function(){
+      const demoBtn = document.getElementById('npDemoBtn');
+      const npTitle = document.getElementById('npTitle');
+      const npArtist = document.getElementById('npArtist');
+      const npArt = document.getElementById('npArt');
+      const sample = [
+        {t:'night train lullaby', a:"yöjuna (demo)", art:'nt'},
+        {t:'phonk edit - underpass', a:'cloverclowzer', art:'ph'},
+        {t:'visc.lol beta theme', a:'visc team', art:'vl'}
+      ];
+      let s = 0, demoInterval = null;
+      function playSample(){
+        const cur = sample[s];
+        npTitle.textContent = cur.t;
+        npArtist.textContent = cur.a;
+        npArt.textContent = cur.art;
+      }
+      demoBtn.addEventListener('click', ()=>{
+        if(demoInterval){ clearInterval(demoInterval); demoInterval = null; demoBtn.textContent = 'demo play'; npTitle.textContent='not playing'; npArtist.textContent='spotify demo'; npArt.textContent='art'; return; }
+        s = 0; playSample();
+        demoInterval = setInterval(()=>{ s = (s+1) % sample.length; playSample(); }, 3200);
+        demoBtn.textContent = 'stop';
+      });
+
+      document.getElementById('npManual').addEventListener('click', ()=>{
+        const t = prompt('paste track name');
+        if(t){ npTitle.textContent = t; npArtist.textContent = 'manual'; npArt.textContent = '✱'; if(demoInterval){ clearInterval(demoInterval); demoInterval=null; demoBtn.textContent='demo play'; } }
+      });
+
+      // pause demo if tab hidden
+      document.addEventListener('visibilitychange', ()=>{ if(document.hidden && typeof demoInterval === 'number'){ clearInterval(demoInterval); demoInterval = null; demoBtn.textContent='demo play'; } });
+    })();
+
+    /* ---------- 3d tilt on project cards ---------- */
+    (function(){
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card=>{
+        const inner = card.querySelector('.tilt') || card;
+        card.addEventListener('pointermove', e=>{
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left)/rect.width - 0.5;
+          const y = (e.clientY - rect.top)/rect.height - 0.5;
+          const rx = -y * 10;
+          const ry = x * 12;
+          inner.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        card.addEventListener('pointerleave', ()=>{ inner.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)'; });
+      });
+    })();
+
+    /* ---------- smooth scroll for nav links ---------- */
+    (function(){
+      document.querySelectorAll('.nav-link').forEach(link=>{
+        link.addEventListener('click', e=>{
+          const href = link.getAttribute('href');
+          const target = document.querySelector(href);
+          if(!target) return;
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+    })();
+
+    /* ---------- aliases: typewriter + staggered reveal + shuffle ---------- */
+    (function(){
+      const aliasTw = document.getElementById('aliasTypewriter');
+      const aliasText = 'my known aliases:';
+      // play typewriter then show list
+      aliasTw.textContent = '';
+      // trigger the css typing animation class then populate text (works on most browsers)
+      setTimeout(()=>{ aliasTw.classList.add('playing'); aliasTw.textContent = aliasText; }, 220);
+      const aliasItems = Array.from(document.querySelectorAll('.alias-item'));
+      aliasItems.forEach((item, i)=>{
+        setTimeout(()=>{ item.classList.add('visible'); }, 360 + i * 140);
+        // add simple pointer tilt to aliases too
+        item.addEventListener('pointermove', e=>{
+          const r = item.getBoundingClientRect();
+          const x = (e.clientX - r.left)/r.width - 0.5;
+          const y = (e.clientY - r.top)/r.height - 0.5;
+          item.style.transform = `perspective(600px) rotateX(${ -y * 6 }deg) rotateY(${ x * 8 }deg) scale(1.02)`;
+        });
+        item.addEventListener('pointerleave', ()=>{ item.style.transform = ''; });
+        // quick click copy alias
+        item.addEventListener('click', ()=>{ navigator.clipboard?.writeText(item.textContent.trim())?.then(()=>{ item.style.outline = '2px solid rgba(229,193,111,0.18)'; setTimeout(()=>item.style.outline='none',700); }).catch(()=>{}); });
+      });
+
+      // shuffle button
+      const shuffleBtn = document.getElementById('shuffleBtn');
+      shuffleBtn.addEventListener('click', ()=>{
+        const list = document.getElementById('aliasList');
+        const children = Array.from(list.children);
+        const shuffled = children.sort(()=>Math.random()-0.5);
+        list.innerHTML = '';
+        shuffled.forEach((c,i)=>{
+          c.classList.remove('visible');
+          list.appendChild(c);
+          setTimeout(()=> c.classList.add('visible'), 120 + i * 110);
+        });
+      });
+    })();
+
+    /* ---------- horror mode toggle ---------- */
+    (function(){
+      const horrorBtn = document.getElementById('horrorToggle');
+      horrorBtn.addEventListener('click', ()=>{
+        document.documentElement.classList.toggle('horror');
+        document.body.classList.toggle('horror-body');
+        horrorBtn.style.color = document.documentElement.classList.contains('horror') ? '#ff6b6b' : 'var(--muted)';
+        if(document.documentElement.classList.contains('horror')){
+          // quick subtle shake
+          document.body.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:420,iterations:1});
+        }
+      });
+    })();
+
+    /* ---------- nav gentle float follow on scroll ---------- */
+    (function(){
+      const nav = document.querySelector('.nav');
+      window.addEventListener('scroll', ()=>{
+        const y = window.scrollY;
+        nav.style.transform = `translateX(-50%) translateY(${Math.min(12,y*0.02)}px)`;
+      });
+    })();
+
+    /* ---------- accessible cleanup when hidden ---------- */
+    document.addEventListener('visibilitychange', ()=>{ if(document.hidden){ /* stop any heavy intervals if you add them later */ } });
+  </script>
 
 </body>
 </html>
